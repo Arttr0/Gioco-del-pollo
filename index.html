@@ -119,20 +119,21 @@
       var h = window.innerHeight;
 
       if ((isMobile() && h < w) || w > 1080) {
-        canvas.style.display = 'none';
-        loadingBar.style.display = 'none';
-        warningBanner.style.display = 'none';
-        orientationWarning.style.display = 'block';
-        orientationWarning.innerHTML = (w > 1080) 
-          ? "Please rotate your device vertically or resize the browser window to fit your mobile device." 
-          : "Please rotate your device vertically or resize the browser window to fit your mobile device.";
-      } else {
-        canvas.style.display = 'block';
-        loadingBar.style.display = 'block';
-        warningBanner.style.display = 'block';
-        orientationWarning.style.display = 'none';
-      }
-    }
+    // Горизонтальная ориентация или слишком широкий экран
+    canvas.style.display = 'none';
+    loadingBar.style.display = 'none';  // скрыть прогресс-бар
+    warningBanner.style.display = 'none';
+    orientationWarning.style.display = 'block';
+    orientationWarning.innerHTML = (w > 1080)
+        ? "Screen width is too large for the game"
+        : "Please rotate your device vertically or resize the browser window to fit your mobile device.";
+} else {
+    canvas.style.display = 'block';
+    loadingBar.style.display = 'none';  // убрать загрузку, если игра уже запущена
+    warningBanner.style.display = 'block';
+    orientationWarning.style.display = 'none';
+}
+
 
     window.addEventListener('resize', checkOrientation);
     window.addEventListener('load', checkOrientation);

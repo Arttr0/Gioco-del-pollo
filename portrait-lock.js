@@ -1,22 +1,37 @@
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
 function checkOrientation() {
-    // Ширина окна
     var w = window.innerWidth;
     var h = window.innerHeight;
 
+    var canvas = document.getElementById('canvas');
+    var loadingBar = document.getElementById('loadingBar');
+    var warningBanner = document.getElementById('warningBanner');
+
+    var orientationWarning = document.getElementById('orientation-warning');
+
     if ((isMobile() && h < w) || w > 1080) {
-        // Горизонталь на мобилке или слишком широкий экран
-        canvas.style.display = 'none';
-        loadingBar.style.display = 'none';
-        warningBanner.style.display = 'none';
-        document.getElementById('orientation-warning').style.display = 'block';
-        document.getElementById('orientation-warning').innerHTML = 
-            (w > 1080) ? "Ширина экрана слишком большая для игры" : "Пожалуйста, поверните устройство вертикально";
+        // Горизонтальная ориентация на мобилке или слишком широкий экран
+        if (canvas) canvas.style.display = 'none';
+        if (loadingBar) loadingBar.style.display = 'none';
+        if (warningBanner) warningBanner.style.display = 'none';
+
+        if (orientationWarning) {
+            orientationWarning.style.display = 'block';
+            orientationWarning.innerHTML = (w > 1080) 
+                ? "Screen width is too large for optimal gameplay. Please resize your browser or use a mobile device in portrait mode."
+                : "Please rotate your device to portrait orientation for the best experience.";
+        }
     } else {
-        // Портретная ориентация и ширина ≤1080
-        canvas.style.display = 'block';
-        loadingBar.style.display = 'block';
-        warningBanner.style.display = 'block';
-        document.getElementById('orientation-warning').style.display = 'none';
+        if (canvas) canvas.style.display = 'block';
+        if (loadingBar) loadingBar.style.display = 'block';
+        if (warningBanner) warningBanner.style.display = 'block';
+
+        if (orientationWarning) {
+            orientationWarning.style.display = 'none';
+        }
     }
 }
 
